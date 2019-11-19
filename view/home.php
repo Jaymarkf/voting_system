@@ -215,16 +215,16 @@ if($actual_link == '/voting_system/view/home.php'){
 
 
             <div class="card border-dark mb-3" style="position:relative;margin:50px 50px;">
-                <div class="card-header bg-info"><?php
-                    if(isset($_GET['mode'])){
-
-
-                    }
-                    ?></div>
+                <div class="card-header">Manage <?=$mode?></div>
                 <div class="card-body text-dark">
 
                     <h5 class="card-title"></h5>
-
+                    <div class="form-group" style="margin:0">
+                            <span class="btn btn-primary btm-sm" data-toggle="modal" data-target="#modal-addnew">
+                                <i class="fa fa-plus"></i>
+                               Addnew
+                            <span>
+                    </div>
 <!--                    bootgrid here-->
                     <table id="grid-id" class="table table-condensed table-hover table-striped">
                         <thead>
@@ -251,7 +251,147 @@ if($actual_link == '/voting_system/view/home.php'){
     </div>
 
 </div>
+<div class="modal fade in" id="modal-addnew" tabindex="-1" role="dialog" aria-labelledby="modal-addnew" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add New <b class="text-info"><?=$mode?></b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
 
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="input name here..." required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <input type="text" class="form-control" name="gender" placeholder="input gender here..." required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" name="address" placeholder="input address here..." required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="year_level">Year Level</label>
+                                <input type="text" class="form-control" name="year_level" placeholder="input year level here..." required/>
+                            </div>
+                            <?php
+                            if(isset($_GET)){
+                                if($_GET['mode'] == 'candidate'){
+                                    echo ' <div class="form-group">
+                                <label for="position">Position</label>
+                                <select name="position" class="form-control" id="position">
+                                    <option value="President">President</option>
+                                    <option value="Vice President">Vice President</option>
+                                    <option value="Secretary">Secretary</option>
+                                    <option value="Treasurer">Treasurer</option>
+                                    <option value="Auditor">Auditor</option>
+                                </select>
+                            </div>';
+                                }
+                            }
+
+
+                            ?>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="csubmit" class="btn btn-primary">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="modal-delete" tabindex="-2" role="dialog" aria-labelledby="modal-delete" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-danger">
+            <div class="modal-header text-white bg-danger">
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete Information <b class="text-info"><?=$mode?></b></h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                     <span class="text-warning"><b>
+                    Are you sure you want to delete this information ?<br>
+                    this cannot be undone.
+                         </b>
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade in" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-primary">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit <b class="text-white"><?=$mode?></b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="input name here..." required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <input type="text" class="form-control" name="gender" placeholder="input gender here..." required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" name="address" placeholder="input address here..." required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="year_level">Year Level</label>
+                            <input type="text" class="form-control" name="year_level" placeholder="input year level here..." required/>
+                        </div>
+                        <?php
+                        if(isset($_GET)){
+                            if($_GET['mode'] == 'candidate'){
+                                echo ' <div class="form-group">
+                                <label for="position">Position</label>
+                                <select name="position" class="form-control" id="position">
+                                    <option value="President">President</option>
+                                    <option value="Vice President">Vice President</option>
+                                    <option value="Secretary">Secretary</option>
+                                    <option value="Treasurer">Treasurer</option>
+                                    <option value="Auditor">Auditor</option>
+                                </select>
+                            </div>';
+                            }
+                        }
+
+
+                        ?>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="esubmit" class="btn btn-success">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </body>
 
@@ -272,14 +412,28 @@ if($actual_link == '/voting_system/view/home.php'){
             formatters: {
                 "commands": function(column, row)
                 {
-
                     return "<button type='button' class='btn btn-warning btn-sm update' data-row-id='"+row.id+"'>Edit</button>&nbsp; <button type='button' class='btn btn-danger btn-sm delete' data-row-id='"+row.id+"'>Delete</button>";
                 }
             }
+        }).on("loaded.rs.jquery.bootgrid", function (e)
+        {
+           $('.delete').click(function(){
 
+               $('#modal-delete').modal('toggle');
+               $('#modal-delete').modal('show');
+
+           });
+
+           $('.update').click(function(){
+              $('#modal-edit').modal('show');
+              $('#modal-edit').modal('toggle');
+           });
         });
 
     });
+
+
+
 </script>
 
 </html>
