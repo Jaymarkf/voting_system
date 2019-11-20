@@ -16,6 +16,7 @@ if(isset($_GET['mode'])) {
             $data_table .= "</tr>";
         }
 
+
     } elseif ($_GET['mode'] == 'voter') {
         $data = $db->getAllRecords('voter_tbl', '*');
         foreach ($data as $key => $val) {

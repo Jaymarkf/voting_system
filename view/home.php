@@ -127,6 +127,9 @@ if($actual_link == '/voting_system/view/home.php'){
         .dropdown-toggle::after{
             display:none !important;
         }
+        .nav-btn{
+            justify-content: left !important;
+        }
     </style>
 
 
@@ -200,7 +203,7 @@ if($actual_link == '/voting_system/view/home.php'){
         </ul>
     </nav>
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light nav-btn">
 
 
                 <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -251,6 +254,7 @@ if($actual_link == '/voting_system/view/home.php'){
     </div>
 
 </div>
+<!--add new modal-->
 <div class="modal fade in" id="modal-addnew" tabindex="-1" role="dialog" aria-labelledby="modal-addnew" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -303,13 +307,15 @@ if($actual_link == '/voting_system/view/home.php'){
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="csubmit" class="btn btn-primary">Create Account</button>
+                    <button type="submit" name="csubmit" class="btn btn-primary submit-btn">Create Account</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+
+<!--delete modal-->
 <div class="modal fade in" id="modal-delete" tabindex="-2" role="dialog" aria-labelledby="modal-delete" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-danger">
@@ -329,11 +335,17 @@ if($actual_link == '/voting_system/view/home.php'){
                 </span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                <form method="get">
+                    <input type="hidden" name="mode" value="candidate"/>
+                    <input type="hidden" name="id_delete" id="id_delete" value=""/>
+                <button class="btn btn-danger btn-sm del_btn">Delete</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<!--edit modal-->
 <div class="modal fade in" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -386,7 +398,7 @@ if($actual_link == '/voting_system/view/home.php'){
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="esubmit" class="btn btn-success">Confirm</button>
+                    <button type="submit" name="esubmit" class="btn btn-success submit-btn">Confirm</button>
                 </div>
             </form>
         </div>
@@ -396,12 +408,19 @@ if($actual_link == '/voting_system/view/home.php'){
 </body>
 
 <script>
+    function setvalue(e){
+        $('#id_delete').val(e);
+
+    }
+
+
     $(document).ready(function () {
 
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
 
         });
+
         var data_table = $('#grid-id').bootgrid({
             css:
                 {
@@ -409,18 +428,22 @@ if($actual_link == '/voting_system/view/home.php'){
                     table: 'table table-bordered'
                 },
 
+
             formatters: {
                 "commands": function(column, row)
                 {
-                    return "<button type='button' class='btn btn-warning btn-sm update' data-row-id='"+row.id+"'>Edit</button>&nbsp; <button type='button' class='btn btn-danger btn-sm delete' data-row-id='"+row.id+"'>Delete</button>";
+                    return "<button type='button' class='btn btn-warning btn-sm update' data-row-id='"+row.id+"'>Edit</button>&nbsp; <button type='button' class='btn btn-danger btn-sm delete' data-row-id='"+row.id+"' onclick='setvalue("+row.id+")'>Delete</button>";
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function (e)
         {
+
+
            $('.delete').click(function(){
 
                $('#modal-delete').modal('toggle');
                $('#modal-delete').modal('show');
+
 
            });
 
@@ -428,7 +451,13 @@ if($actual_link == '/voting_system/view/home.php'){
               $('#modal-edit').modal('show');
               $('#modal-edit').modal('toggle');
            });
-        });
+
+
+        })
+
+
+
+
 
     });
 
