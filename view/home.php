@@ -12,8 +12,8 @@ if($actual_link == '/voting_system/view/home.php'){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <link rel="shortcut icon" href="https://ogpau.pmc.gov.au/sites/default/files/commitments/icon-blue-voting-box.png">
+    <title>Voting System</title>
 
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
@@ -130,6 +130,7 @@ if($actual_link == '/voting_system/view/home.php'){
         .nav-btn{
             justify-content: left !important;
         }
+
     </style>
 
 
@@ -201,6 +202,7 @@ if($actual_link == '/voting_system/view/home.php'){
                 <a href="#">Winner Candidates<span class="pull-right"><i class="fa fa-trophy"></i></a>
             </li>
         </ul>
+
     </nav>
     <div id="content">
         <nav class="navbar navbar-expand-lg navbar-light bg-light nav-btn">
@@ -218,7 +220,7 @@ if($actual_link == '/voting_system/view/home.php'){
 
 
             <div class="card border-dark mb-3" style="position:relative;margin:50px 50px;">
-                <div class="card-header">Manage <?=$mode?></div>
+                <div class="card-header">Manage <? if(isset($mode)) echo $mode?></div>
                 <div class="card-body text-dark">
 
                     <h5 class="card-title"></h5>
@@ -259,15 +261,28 @@ if($actual_link == '/voting_system/view/home.php'){
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Add New <b class="text-info"><?=$mode?></b></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Add New <b class="text-info"><?php if(isset($mode)) echo $mode;?></b></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post">
+            <form method="post" action="./data_model/submit_post.php">
+                <input type="hidden" name="gid" value="<?php if(isset($_GET['mode'])) echo $_GET['mode'] ?>"/>
                 <div class="modal-body">
-
                         <div class="form-group">
+                            <?php if(isset($_GET['mode'])){
+                              if($_GET['mode'] == 'voter'){
+                                  echo '<div class="form-group">
+                                <label for="name">Username</label>
+                                <input type="text" class="form-control" name="username" placeholder="input username here..." required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Password</label>
+                                <input type="password" class="form-control" name="password" placeholder="input name here..." required/>
+                            </div>';
+                              }
+                            }
+                            ?>
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" name="name" placeholder="input name here..." required/>
@@ -285,7 +300,7 @@ if($actual_link == '/voting_system/view/home.php'){
                                 <input type="text" class="form-control" name="year_level" placeholder="input year level here..." required/>
                             </div>
                             <?php
-                            if(isset($_GET)){
+                            if(isset($_GET['mode'])){
                                 if($_GET['mode'] == 'candidate'){
                                     echo ' <div class="form-group">
                                 <label for="position">Position</label>
@@ -299,11 +314,8 @@ if($actual_link == '/voting_system/view/home.php'){
                             </div>';
                                 }
                             }
-
-
                             ?>
                         </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -320,7 +332,7 @@ if($actual_link == '/voting_system/view/home.php'){
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-danger">
             <div class="modal-header text-white bg-danger">
-                <h5 class="modal-title" id="exampleModalLongTitle">Delete Information <b class="text-info"><?=$mode?></b></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Delete Information <b class="text-info"><?php if(isset($mode)) echo $mode?></b></h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="text-white">&times;</span>
@@ -335,8 +347,8 @@ if($actual_link == '/voting_system/view/home.php'){
                 </span>
             </div>
             <div class="modal-footer">
-                <form method="get">
-                    <input type="hidden" name="mode" value="candidate"/>
+                <form method="post" action="./data_model/submit_post.php">
+                    <input type="hidden" name="mode" value="<?php if(isset($_GET['mode'])) echo $_GET['mode']; ?>"/>
                     <input type="hidden" name="id_delete" id="id_delete" value=""/>
                 <button class="btn btn-danger btn-sm del_btn">Delete</button>
                 </form>
@@ -350,12 +362,15 @@ if($actual_link == '/voting_system/view/home.php'){
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-white bg-primary">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit <b class="text-white"><?=$mode?></b></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit <b class="text-white"><?php if(isset($mode)) echo $mode?></b></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post">
+            <form method="post" action="./data_model/submit_post.php">
+                <input type="hidden" id="edit" name="edit" value=""/>
+                <input type="hidden" name="mode_edit" value="<?php if(isset($_GET['mode'])) echo $_GET['mode'];?>"/>
+
                 <div class="modal-body">
 
                     <div class="form-group">
@@ -376,7 +391,7 @@ if($actual_link == '/voting_system/view/home.php'){
                             <input type="text" class="form-control" name="year_level" placeholder="input year level here..." required/>
                         </div>
                         <?php
-                        if(isset($_GET)){
+                        if(isset($_GET['mode'])){
                             if($_GET['mode'] == 'candidate'){
                                 echo ' <div class="form-group">
                                 <label for="position">Position</label>
@@ -412,7 +427,9 @@ if($actual_link == '/voting_system/view/home.php'){
         $('#id_delete').val(e);
 
     }
-
+    function seteditvalue(e){
+        $('#edit').val(e);
+    }
 
     $(document).ready(function () {
 
@@ -432,7 +449,7 @@ if($actual_link == '/voting_system/view/home.php'){
             formatters: {
                 "commands": function(column, row)
                 {
-                    return "<button type='button' class='btn btn-warning btn-sm update' data-row-id='"+row.id+"'>Edit</button>&nbsp; <button type='button' class='btn btn-danger btn-sm delete' data-row-id='"+row.id+"' onclick='setvalue("+row.id+")'>Delete</button>";
+                    return "<button type='button' class='btn btn-warning btn-sm update' data-row-id='"+row.id+"' onclick='seteditvalue("+row.id+")'>Edit</button>&nbsp; <button type='button' class='btn btn-danger btn-sm delete' data-row-id='"+row.id+"' onclick='setvalue("+row.id+")'>Delete</button>";
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function (e)
@@ -447,13 +464,14 @@ if($actual_link == '/voting_system/view/home.php'){
 
            });
 
-           $('.update').click(function(){
-              $('#modal-edit').modal('show');
-              $('#modal-edit').modal('toggle');
-           });
+
+                       $('.update').click(function(){
+                          $('#modal-edit').modal('show');
+                          $('#modal-edit').modal('toggle');
+                       });
 
 
-        })
+        });
 
 
 
