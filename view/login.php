@@ -21,14 +21,14 @@
                     <div class="form-group text-center">
                         <h1>Migration Login</h1>
                     </div>
-                    <div class="container-fluid" style="<?=$errTitleStyle?>"><?php echo $errMsg; ?></div>
+                    <div class="container-fluid" style="<?php if(isset($errTitleStyle)) echo $errTitleStyle;?>"><?php if(isset($errMsg))echo $errMsg; ?></div>
                     <div class="form-group">
                         <label for="email">Username</label>
-                        <input type="text" id="user_name" class="form-control" placeholder="" name="user_name" style="<?=$errStyle?>"/>
+                        <input type="text" id="user_name" class="form-control" placeholder="" name="user_name" style="<?php if(isset($errStyle)) echo $errStyle;?>"/>
                     </div>
                     <div class="form-group">
                         <label for="email">Password</label>
-                        <input type="password" id="user_password" class="form-control" placeholder=""  name="user_password" style="<?=$errStyle?>"/>
+                        <input type="password" id="user_password" class="form-control" placeholder=""  name="user_password" style="<?php if(isset($errStyle)) echo $errStyle;?>"/>
                     </div>
                     <div>
                         <input type="submit" class="btn btn-primary btn-block btn-round" value="Log In" />
