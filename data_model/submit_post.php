@@ -2,22 +2,25 @@
 
 $host = "localhost";
 $username = "root";
-$password = "r00tb33r";
+$password = "";
 $db = "voting_db";
 $conn = mysqli_connect($host,$username,$password,$db);
 session_start();
-
 if(isset($_POST['submit']) || isset($_POST['user_name']) || isset($_POST['user_password'])) {
 
     $md5password = md5($_POST['user_password']);
-
     $qry = "select * from table_admin where username='" . mysqli_escape_string($conn, $_POST['user_name']) . "' and password='$md5password'";
     $sql = mysqli_query($conn, $qry);
     if (mysqli_num_rows($sql) > 0) {
         $data = mysqli_fetch_assoc($sql);
         $_SESSION['user_name'] = $_POST['user_name'];
-        $_SESSION['user_unique_id']  = $data['id'];
+
         if($data['user_status'] == 'voter'){
+            $qrys = 'select * from voter_tbl where username ="'.$_POST['user_name'].'" and password ="'.$md5password.'"';
+            $x = mysqli_query($conn,$qrys);
+            $user = mysqli_fetch_assoc($x);
+            $_SESSION['name_user'] = $user['name'];
+            $_SESSION['user_unique_id']  = $user['id'];
             header('Location: ../voter.php');
         }else{
             header('Location: ../home.php');
@@ -123,8 +126,6 @@ if(isset($_POST['edit'])){
 
 }
 
-
-
 if(isset($_POST['id_delete'])){
     $id = $_POST['id_delete'];
     if($_POST['mode'] == 'candidate'){
@@ -134,6 +135,33 @@ if(isset($_POST['id_delete'])){
         $db->delete('voter_tbl',array('id'=>$id));
         header('Location: ../home.php?mode=voter');
     }
+
+
+
+}
+
+if(isset($_POST['idcandidate'])){
+    $idvoter = $_POST['idcandidate'];
+    $position = $_POST['idpos'];
+    if($position == 'President'){
+        $datax = 'vote_president ="'.$idvoter.'"';
+    }elseif($position == 'Vice President'){
+        $datax = 'vote_vice_president ="'.$idvoter.'"';
+    }elseif($position == 'Secretary'){
+        $datax = 'vote_secretary ="'.$idvoter.'"';
+    }elseif($position == 'Treasurer'){
+        $datax = 'vote_treasurer ="'.$idvoter.'"';
+    }elseif($position == 'Auditor'){
+        $datax = 'vote_auditor ="'.$idvoter.'"';
+    }elseif($position == 'Muse') {
+        $datax = 'vote_muse ="' . $idvoter . '"';
+    }
+
+    $qryz = "update voter_tbl set ".$datax." where id= ".$_SESSION['user_unique_id'].";";
+    mysqli_query($conn,$qryz);
+
+
+
 
 
 

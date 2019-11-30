@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
+
 <body>
 <div class="container-fluid col-md-4">
     <div class="login_wrapper" style="">
@@ -19,7 +20,7 @@
 
                 <form method="post" action="./data_model/submit_post.php"style="padding: 5px;">
                     <div class="form-group text-center">
-                        <h1>Migration Login</h1>
+                        <h1 class="text-info">Online Voting System</h1>
                     </div>
                     <div class="container-fluid" style="<?php if(isset($errTitleStyle)) echo $errTitleStyle;?>"><?php if(isset($errMsg))echo $errMsg; ?></div>
                     <div class="form-group">
