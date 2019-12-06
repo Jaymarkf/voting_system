@@ -177,20 +177,7 @@ if($actual_link == '/voting_system/view/home.php'){
         <!--                    </li>-->
         <!--                </ul>-->
         <!--            </li>-->
-        <!--            <li>-->
-        <!--                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>-->
-        <!--                <ul class="collapse list-unstyled" id="pageSubmenu">-->
-        <!--                    <li>-->
-        <!--                        <a href="#">Page 1</a>-->
-        <!--                    </li>-->
-        <!--                    <li>-->
-        <!--                        <a href="#">Page 2</a>-->
-        <!--                    </li>-->
-        <!--                    <li>-->
-        <!--                        <a href="#">Page 3</a>-->
-        <!--                    </li>-->
-        <!--                </ul>-->
-        <!--            </li>-->
+
             <li>
                 <a href="?mode=candidate">Manage Candidates<span class="pull-right"><i class="fa fa-edit"></i></span></a>
             </li>
@@ -199,10 +186,21 @@ if($actual_link == '/voting_system/view/home.php'){
                 <a href="?mode=voter">Manage Voters<span class="pull-right"><i class="fa fa-edit"></i></a>
             </li>
             <li>
-                <a href="#">Winner Candidates<span class="pull-right"><i class="fa fa-trophy"></i></a>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Winner Candidates<span class="pull-right"><i class="fa fa-sort-down"></i></span></a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#modal-showscore" >Scores<span class="pull-right"><i class="fa fa-circle"></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#modal-showwin">Winner <span class="pull-right"><i class="fa fa-trophy"></i></span></a>
+                    </li>
+                </ul>
             </li>
+            <br>
+            <br>
+            <br>
+            <li><a href="?logout" class="text-center">Logout</a></li>
         </ul>
-
     </nav>
     <div id="content">
         <nav class="navbar navbar-expand-lg navbar-light bg-light nav-btn">
@@ -219,7 +217,7 @@ if($actual_link == '/voting_system/view/home.php'){
         <div class="container-fluid" style="">
 
 
-            <div class="card border-dark mb-3" style="position:relative;margin:50px 50px;">
+            <div class="card mb-3" style="position:relative;margin:50px 50px;<?php if(!isset($_GET['mode'])){ echo "display:none";}?>">
                 <div class="card-header">Manage <? if(isset($mode)) echo $mode?></div>
                 <div class="card-body text-dark">
 
@@ -231,24 +229,51 @@ if($actual_link == '/voting_system/view/home.php'){
                             <span>
                     </div>
 <!--                    bootgrid here-->
-                    <table id="grid-id" class="table table-condensed table-hover table-striped">
+                    <?php if(isset($_GET['mode'])) {
+
+                        if($_GET['mode'] == 'candidate'){
+                            echo '<table id="grid-id" class="table table-condensed table-hover table-striped">
                         <thead>
                         <tr>
                             <th data-column-id="id" data-type="numeric">ID</th>
                             <th data-column-id="name">Name</th>
                             <th data-column-id="gender">Gender</th>
                             <th data-column-id="address" data-order="asc">Address</th>
-                           <?php if(isset($_GET['mode'])){if($_GET['mode'] == 'candidate'){echo '<th data-column-id="position">Position</th>';}} ?>
+                           <th data-column-id=\"position\">Position</th>
                             <th data-column-id="year_level">Year Level</th>
                             <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <?php if(isset($data_table)){echo $data_table;}?>
-                        </tbody>
-                    </table>
+                        <tbody>';
+                            if(isset($data_table)){echo $data_table;}
+                         echo '</tbody>
+                             </table>';
+
+
+
+                        }else{
+                            echo '<table id="grid-id" class="table table-condensed table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th data-column-id="id" data-type="numeric">ID</th>
+                            <th data-column-id="name">Name</th>
+                            <th data-column-id="gender">Gender</th>
+                            <th data-column-id="address" data-order="asc">Address</th>
+                            <th data-column-id="year_level">Year Level</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                        </tr>
+                        </thead>
+                        <tbody>';
+                            if(isset($data_table)){echo $data_table;}
+                            echo '</tbody>
+                             </table>';
+
+                        }
+                    }
+                    ?>
                 </div>
             </div>
+<!--            here-->
 
         </div>
 
@@ -420,6 +445,384 @@ if($actual_link == '/voting_system/view/home.php'){
     </div>
 </div>
 
+
+<!--show score-->
+<div class="modal fade in" id="modal-showscore" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-primary">
+                <h5 class="modal-title" id="exampleModalLongTitle">Score of Candidates</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+                <div class="modal-body">
+<!--                PRESIDENT---------->
+                    <div class="card">
+                        <div class="card-header">
+                            President List
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+<!--                        insert here-->
+                            <?php if(isset($data_pres)){ echo $data_pres; }?>
+                        </div>
+
+                    </div>
+                    <br>
+
+<!--                    VICE PRESIDENT-------------->
+                    <div class="card">
+                        <div class="card-header">
+                           Vice President List
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+<!--                        insert here-->
+                            <?php if(isset($data_vice)){ echo $data_vice; }?>
+                        </div>
+
+                    </div>
+                    <br>
+
+<!--                    SECRETARY-------------->
+                    <div class="card">
+                        <div class="card-header">
+                            Secretary List
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+<!--                    insert here-->
+                            <?php if(isset($data_sec)){ echo $data_sec; }?>
+                        </div>
+
+                    </div>
+                    <br>
+<!--                    TREASURER--------->
+                    <div class="card">
+                        <div class="card-header">
+                            Treasurer List
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+<!--                   insert here-->
+                            <?php if(isset($data_tres)){ echo $data_tres; }?>
+                        </div>
+
+                    </div>
+                    <br>
+
+<!--                    AUDITOR-------------->
+                    <div class="card">
+                        <div class="card-header">
+                            Auditor List
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+<!--                        insert here-->
+                            <?php if(isset($data_aud)){ echo $data_aud; }?>
+                        </div>
+
+                    </div>
+
+<!--                    MUSE------------>
+                    <br>
+                    <div class="card">
+                        <div class="card-header">
+                          Muse List
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                    </div>
+
+                                </div>
+                            </div>
+<!--                  insert here-->
+                            <?php if(isset($data_muse)){ echo $data_muse; }?>
+                        </div>
+
+                    </div>
+              </div>
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+        </div>
+        </div>
+    </div>
+
+<!--show winner-->
+<div class="modal fade in" id="modal-showwin" tabindex="-1" role="dialog" aria-labelledby="modal-edit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-success">
+                <h5 class="modal-title" id="exampleModalLongTitle">Score of Candidates</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--                PRESIDENT---------->
+                <div class="card">
+                    <div class="card-header">
+                     President Winner
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                            </div>
+                            <div class="col-sm">
+                                <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--                        insert here-->
+                        <?php if(isset($data_win_pres)){ echo $data_win_pres; }?>
+                    </div>
+
+                </div>
+                <br>
+
+                <!--                    VICE PRESIDENT-------------->
+                <div class="card">
+                    <div class="card-header">
+                        Vice President Winner
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                            </div>
+                            <div class="col-sm">
+                                <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--                        insert here-->
+                        <?php if(isset($data_win_vice)){ echo $data_win_vice; }?>
+                    </div>
+
+                </div>
+                <br>
+
+                <!--                    SECRETARY-------------->
+                <div class="card">
+                    <div class="card-header">
+                        Secretary Winner
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                            </div>
+                            <div class="col-sm">
+                                <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--                    insert here-->
+                        <?php if(isset($data_win_sec)){ echo $data_win_sec; }?>
+                    </div>
+
+                </div>
+                <br>
+                <!--                    TREASURER--------->
+                <div class="card">
+                    <div class="card-header">
+                        Treasurer Winner
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                            </div>
+                            <div class="col-sm">
+                                <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--                   insert here-->
+                        <?php if(isset($data_win_tres)){ echo $data_win_tres; }?>
+                    </div>
+
+                </div>
+                <br>
+
+                <!--                    AUDITOR-------------->
+                <div class="card">
+                    <div class="card-header">
+                        Auditor Winner
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                            </div>
+                            <div class="col-sm">
+                                <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--                        insert here-->
+                        <?php if(isset($data_win_aud)){ echo $data_win_aud; }?>
+                    </div>
+
+                </div>
+
+                <!--                    MUSE------------>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        Muse Winner
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                    <span class="text-info">
+                                        Names
+                                    </span>
+                            </div>
+                            <div class="col-sm">
+                                <div class="text-right">
+                                        <span class="text-info">
+                                        Total Vote
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--                  insert here-->
+                        <?php if(isset($data_win_muse)){ echo $data_win_muse; }?>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 </body>
 
 <script>
@@ -432,6 +835,7 @@ if($actual_link == '/voting_system/view/home.php'){
     }
 
     $(document).ready(function () {
+
 
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');

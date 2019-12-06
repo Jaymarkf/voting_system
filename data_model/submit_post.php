@@ -31,7 +31,6 @@ if(isset($_POST['submit']) || isset($_POST['user_name']) || isset($_POST['user_p
     }
 }
 
-
 include_once('../include/config.php');
 //add new information
 if(isset($_POST['gid'])){
