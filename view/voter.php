@@ -26,13 +26,9 @@ $x = mysqli_query($conn,$a2);
 $sec = mysqli_fetch_assoc($x);
 $secretary = $sec['cnd'];
 
-$aud = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_secretary where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
-$audi = mysqli_query($conn,$aud);
-$audit = mysqli_fetch_assoc($audi);
-$auditor = $audit['cnd'];
 
 
-$aud = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_secretary where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
+$aud = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_auditor where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
 $audi = mysqli_query($conn,$aud);
 $audit = mysqli_fetch_assoc($audi);
 $auditor = $audit['cnd'];
