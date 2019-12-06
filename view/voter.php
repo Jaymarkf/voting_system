@@ -8,7 +8,42 @@ $pres = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd 
 $a = mysqli_query($conn,$pres);
 $presdata = mysqli_fetch_assoc($a);
 $president = $presdata['cnd'];
-//to be continue here...
+
+
+$pres1 = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_vice_president where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
+$a1 = mysqli_query($conn,$pres1);
+$vice = mysqli_fetch_assoc($a1);
+$vicepresident = $vice['cnd'];
+
+
+$t = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_treasurer where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
+$tr = mysqli_query($conn,$t);
+$tre = mysqli_fetch_assoc($tr);
+$treasurer = $tre['cnd'];
+
+$a2 = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_secretary where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
+$x = mysqli_query($conn,$a2);
+$sec = mysqli_fetch_assoc($x);
+$secretary = $sec['cnd'];
+
+$aud = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_secretary where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
+$audi = mysqli_query($conn,$aud);
+$audit = mysqli_fetch_assoc($audi);
+$auditor = $audit['cnd'];
+
+
+$aud = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_secretary where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
+$audi = mysqli_query($conn,$aud);
+$audit = mysqli_fetch_assoc($audi);
+$auditor = $audit['cnd'];
+
+
+$m = "select voter_tbl.name,candidate_tbl.position,candidate_tbl.name as cnd from candidate_tbl inner join voter_tbl on candidate_tbl.id = voter_tbl.vote_muse where voter_tbl.id = ".$_SESSION['user_unique_id'].";";
+$mu = mysqli_query($conn,$m);
+$mus = mysqli_fetch_assoc($mu);
+$muse = $mus['cnd'];
+
+
 
 
 ?>
@@ -194,16 +229,19 @@ $president = $presdata['cnd'];
                 <a href="#">President: <?=$president?></a>
             </li>
             <li>
-                <a href="#">Vice President: </a>
+                <a href="#">Vice President: <?=$vicepresident?></a>
             </li>
             <li>
-                <a href="#">Secretary: </a>
+                <a href="#">Treasurer: <?=$treasurer?></a>
             </li>
             <li>
-                <a href="#">Auditor: </a>
+                <a href="#">Secretary: <?=$secretary?></a>
             </li>
             <li>
-                <a href="#">Muse: </a>
+                <a href="#">Auditor: <?=$auditor?></a>
+            </li>
+            <li>
+                <a href="#">Muse: <?=$muse?></a>
             </li>
             <br>
             <br>
@@ -276,31 +314,38 @@ $president = $presdata['cnd'];
             formatters: {
                 "commands": function(column, row)
                 {
-                    return "<button class='btn btn-success btn-vote' id='"+row.id+"' pos='"+row.position+"'>Vote</button> ";
+
+                    return "<button class='btn btn-success btn-vote' id='"+row.id+"' pos='"+row.position+"' >Vote</button>";
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function ()
         {
 
             $('.btn-vote').click(function(){
-                var idcandidate = this.id;
-                var idpos = jQuery(this).attr('pos');;
+                confirm("are you sure you want to vote this candidate? this cannot be undone")
+                {
+                    var idcandidate = this.id;
+                    var idpos = jQuery(this).attr('pos');
+                    ;
 
-                $.ajax({
-                    url:'./data_model/submit_post.php',
-                    type:'post',
-                    data:{idcandidate:idcandidate,idpos:idpos},
-                    success:function(){
-                        window.location.reload();
-                    }
-                });
+                    $.ajax({
+                        url: './data_model/submit_post.php',
+                        type: 'post',
+                        data: {idcandidate: idcandidate, idpos: idpos},
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
+                }
+
             });
+
+
+
+
         });
 
     });
-
-
-
 </script>
 
 </html>

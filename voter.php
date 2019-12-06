@@ -27,4 +27,15 @@ if(isset($_GET['logout'])){
    header('Location: index.php');
 }
 
+//for retrieving winner of president
+//select candidate_tbl.name,count(voter_tbl.vote_president) as vote_count,voter_tbl.vote_president as candidate_id from voter_tbl
+//inner join candidate_tbl on voter_tbl.vote_president = candidate_tbl.id
+//group by voter_tbl.vote_president  order by vote_count desc limit 1
+
+
+
+
+
+
+
 include_once('view/voter.php');

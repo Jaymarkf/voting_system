@@ -12,9 +12,7 @@ try {
 }catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
-$db   =   new Database($pdo);
-
-
+$db = new Database($pdo);
 
 
 ?>
